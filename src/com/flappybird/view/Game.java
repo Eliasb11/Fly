@@ -25,6 +25,8 @@ import com.flappybird.model.Bird;
 import com.flappybird.model.Debug;
 import com.flappybird.model.Item;
 import com.flappybird.model.Tube;
+import com.flappybird.model.PlayerScore;
+import com.flappybird.model.TableauScore;
 import com.flappybird.model.TubeColumn;
 import com.flappybird.model.proxy.ProxyImage;
 import com.flappybird.model.TubeColumn;
