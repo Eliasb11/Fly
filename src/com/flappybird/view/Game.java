@@ -27,6 +27,8 @@ import com.flappybird.model.Item;
 import com.flappybird.model.Tube;
 import com.flappybird.model.TubeColumn;
 import com.flappybird.model.proxy.ProxyImage;
+import com.flappybird.model.TubeColumn;
+import com.flappybird.model.proxy.ProxyImage;
 
 /**
  *
@@ -43,12 +45,13 @@ public class Game extends JPanel implements ActionListener {
     private TubeColumn tubeColumn;
     private int score;
     private int highScore;
-    private int niveau;
     private Debug debug;
     private Item bonus;
+    private TableauScore tscore;
 
     public Game() {
         
+        tscore = new TableauScore();
     	proxyImage1 = new ProxyImage("/assets/background.png");
         proxyImage2 = new ProxyImage("/assets/test.gif");
         accueil = proxyImage1.loadImage().getImage();
@@ -92,18 +95,12 @@ public class Game extends JPanel implements ActionListener {
             g2.setColor(Color.black);
             g.setFont(new Font("Arial", 1, 20));
             g2.drawString("Votre score : " + this.tubeColumn.getPoints(), 10, 20);
-           //La boucle permet d'augmenter le niveau. Bug au niveau de l'iteration 
-            while((this.tubeColumn.getPoints()%5) == 0 && this.tubeColumn.getPoints() > 0) {
-            	
-             niveau = niveau + 1;
-             break;
-            }
-            g2.drawString("Niveau : " +niveau, Window.WIDTH / 2 - 150, 20);
+            g2.drawString("Niveau : " +this.tubeColumn.getNiveau(), Window.WIDTH / 2 - 150, 20);
             ///////////////////////////////
         } else {
             g2.setColor(Color.black);
              g.setFont(new Font("Arial", 1, 20));
-            g2.drawString("Appuyez sur la touche 'Entr�e' pour jouer", Window.WIDTH / 2 - 150, Window.HEIGHT / 2);
+            g2.drawString("Appuyez sur la touche 'Entrée' pour jouer", Window.WIDTH / 2 - 150, Window.HEIGHT / 2);
             g2.setColor(Color.black);
             g.setFont(new Font("Arial", 1, 15));
             g2.drawString("Powered by LaFlyTeam", Window.WIDTH - 200, Window.HEIGHT - 50);
@@ -142,16 +139,29 @@ public class Game extends JPanel implements ActionListener {
         }
     }
 
+    
+   /**
+     * Methode privée qui finit la partie, remet les points a zero, et ajoute le score dans un tableau 
+     */
     private void endGame() {
-        this.isRunning = false;
+    	
+        int myScore = this.tubeColumn.getPoints();
+        this.tscore.addScore(new PlayerScore("michel",myScore));
+        this.tscore.afficherScore();
+       
+    	
+    	this.isRunning = false;
         if (this.tubeColumn.getPoints() > highScore) {
             this.highScore = this.tubeColumn.getPoints();
         }
-        this.tubeColumn.setPoints(0);
-        this.niveau = 0;
 
+        this.tubeColumn.setPoints(0);
+        
     }
 
+    /**
+     * Methode privée qui finit la partie, remet les points a zero, et ajoute le score dans un tableau 
+     */
     private void checkColision() {
         Rectangle rectBird = this.bird.getBounds();
         Rectangle rectTube;
@@ -160,7 +170,9 @@ public class Game extends JPanel implements ActionListener {
             Tube tempTube = this.tubeColumn.getTubes().get(i);
             rectTube = tempTube.getBounds();
             if (rectBird.intersects(rectTube)) {
-                endGame();
+              if(this.isRunning) {
+                	endGame();                	
+                }
             }
         }
     }
