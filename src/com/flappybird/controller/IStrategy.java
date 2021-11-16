@@ -5,8 +5,9 @@
  */
 package com.flappybird.controller;
 
-import com.flappybird.model.Bird;
 import java.awt.event.KeyEvent;
+
+import com.flappybird.model.Bird;
 
 /**
  *

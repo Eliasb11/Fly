@@ -5,11 +5,6 @@
  */
 package com.flappybird.view;
 
-import com.flappybird.controller.Controller;
-import com.flappybird.model.Bird;
-import com.flappybird.model.Tube;
-import com.flappybird.model.TubeColumn;
-import com.flappybird.model.proxy.ProxyImage;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,8 +16,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import com.flappybird.controller.Controller;
+import com.flappybird.model.Bird;
+import com.flappybird.model.Debug;
+import com.flappybird.model.Item;
+import com.flappybird.model.Tube;
+import com.flappybird.model.TubeColumn;
+import com.flappybird.model.proxy.ProxyImage;
 
 /**
  *
@@ -40,6 +44,8 @@ public class Game extends JPanel implements ActionListener {
     private int score;
     private int highScore;
     private int niveau;
+    private Debug debug;
+    private Item bonus;
 
     public Game() {
         
@@ -52,6 +58,10 @@ public class Game extends JPanel implements ActionListener {
         addKeyListener(new GameKeyAdapter());
         Timer timer = new Timer(15, this);
         timer.start();
+        debug = new Debug();
+        bonus = new Item(400,300);
+        bonus.setDx(5);
+        bonus.tick();
     }
 
     @Override
@@ -102,11 +112,30 @@ public class Game extends JPanel implements ActionListener {
         g.setFont(new Font("Arial", 1, 20));
         g2.drawString("High Score: " + highScore, Window.WIDTH - 160, 20);
 
+        /* Mettre ici tous les elements du debug */
+        g2.drawString(this.debug.getIntitule(), 20, 20);
+        this.bonus.render(g2,this);
         g.dispose();
+    }
+    
+    /**
+     * @author PARDON Alexandre
+     * Appeler quand on tape F1
+     */
+    private void ouvrirDebug() {
+    	if (!debug.isActiv()) {
+    		debug.setActiv(true);
+    		debug.setIntitule(debug.getIntituleCalcule());
+    	}else {
+    		debug.setActiv(false);
+    		debug.setIntitule(debug.getIntituleCalcule());
+    	}
     }
 
     private void restartGame() {
         if (!isRunning) {
+        	this.debug.setActiv(false);
+        	this.debug.setIntitule(debug.getIntituleCalcule());
             this.isRunning = true;
             this.bird = new Bird(Window.WIDTH / 2, Window.HEIGHT / 2);
             this.tubeColumn = new TubeColumn();
@@ -154,11 +183,16 @@ public class Game extends JPanel implements ActionListener {
             }
         }
 
+        
         @Override
         public void keyReleased(KeyEvent e) {
             if (isRunning) {
                 controller.controllerReleased(bird, e);
+            }else {
+            	 if (e.getKeyCode() == KeyEvent.VK_F1) {
+                 	ouvrirDebug();
+                 }
             }
-        }
+    }
     }
 }
