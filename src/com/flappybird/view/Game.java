@@ -16,7 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -29,6 +32,10 @@ import com.flappybird.model.Tube;
 import com.flappybird.model.TubeColumn;
 import com.flappybird.model.proxy.ProxyImage;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 /**
  *
  * @author derickfelix
@@ -126,6 +133,7 @@ public class Game extends JPanel implements ActionListener {
     private void ouvrirDebug() {
     	if (!debug.isActiv()) {
     		debug.setActiv(true);
+    		this.FichierTxt("michel", highScore);
     		debug.setIntitule(debug.getIntituleCalcule());
     	}else {
     		debug.setActiv(false);
@@ -167,11 +175,32 @@ public class Game extends JPanel implements ActionListener {
         }
     }
     
-    private class FichierTxt{
+    private void FichierTxt(String nom, int score){
+    	  try {
+
+    		   String content = nom + score;
+
+    		   File file = new File("test.txt");
+
+    		   // créer le fichier s'il n'existe pas
+    		   if (!file.exists()) {
+    		    file.createNewFile();
+    		   }
+
+    		   FileWriter fw = new FileWriter(file.getAbsoluteFile());
+    		   BufferedWriter bw = new BufferedWriter(fw);
+    		   bw.write(content);
+    		   bw.close();
+
+    		   System.out.println("Modification terminée!");
+
+    		  } catch (IOException e) {
+    		   e.printStackTrace();
+    		  }
+    		 }
     	
-    	
-    	
-    }
+
+    
 
     // Key
     private class GameKeyAdapter extends KeyAdapter {
