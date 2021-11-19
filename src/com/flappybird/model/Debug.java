@@ -26,8 +26,9 @@ public class Debug {
 		this.intitule = "DEBUG (F1)";
 		hightScore = "";
 		this.activ = false;
+		
 	}
-	
+		
 	public String getHightScore() {
 		return hightScore;
 	}

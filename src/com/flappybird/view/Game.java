@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -147,6 +148,7 @@ public class Game extends JPanel implements ActionListener {
         if (this.tubeColumn.getPoints() > highScore) {
             this.highScore = this.tubeColumn.getPoints();
         }
+        System.out.println(this.tubeColumn.getPoints());
         this.tubeColumn.setPoints(0);
         this.niveau = 0;
 
@@ -165,7 +167,11 @@ public class Game extends JPanel implements ActionListener {
         }
     }
     
-    
+    private class FichierTxt{
+    	
+    	
+    	
+    }
 
     // Key
     private class GameKeyAdapter extends KeyAdapter {
