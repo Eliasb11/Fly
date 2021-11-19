@@ -22,7 +22,7 @@ public class Bird extends GameObject {
     public Bird(int x, int y){
         super(x, y);
         if(proxyImage == null) {
-            proxyImage = new ProxyImage("/assets/Avion.gif");
+            proxyImage = new ProxyImage("/assets/ArtikodinGrand.gif");
         }
         this.image = proxyImage.loadImage().getImage();
         this.width = image.getWidth(null);

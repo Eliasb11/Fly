@@ -19,7 +19,7 @@ public class Item extends GameObject {
 	public Item(int x, int y) {
 		super(x, y);
 		if (proxyImage == null) {
-			proxyImage = new ProxyImage("/assets/etoile.png");
+			proxyImage = new ProxyImage("/assets/");
 
 		}
 		this.image = proxyImage.loadImage().getImage();
