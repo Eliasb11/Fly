@@ -127,8 +127,8 @@ public class Game extends JPanel implements ActionListener {
     }
     
     /**
-     * @author PARDON Alexandre
-     * Appeler quand on tape F1
+     * @author PARDON Alexandre / Belabou Elias
+     * Appeler quand on tape F1 / Appel a la fonction FichierTxt qui permet de créer un fichier texte
      */
     private void ouvrirDebug() {
     	if (!debug.isActiv()) {
@@ -175,6 +175,11 @@ public class Game extends JPanel implements ActionListener {
         }
     }
     
+    
+    /**
+     * @author BELABOU Elias
+     * Creation d'un fichier texte avec le score et le nom du joueur
+     */    
     private void FichierTxt(String nom, int score){
     	  try {
 
