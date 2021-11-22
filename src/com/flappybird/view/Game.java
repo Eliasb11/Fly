@@ -70,6 +70,8 @@ public class Game extends JPanel implements ActionListener {
         bonus = new Item(400,300);
         bonus.setDx(5);
         bonus.tick();
+        
+        
     }
 
     @Override
@@ -119,11 +121,20 @@ public class Game extends JPanel implements ActionListener {
         g2.setColor(Color.black);
         g.setFont(new Font("Arial", 1, 20));
         g2.drawString("High Score: " + highScore, Window.WIDTH - 160, 20);
-
+        
+        
+        /**
+         *  @author Belabou Elias
+         *  Afficher la focntion debug sur la page d'accueil
+         *  et le cacher lorsque la aprtie est lancée
+         */
+        if (!isRunning) {
+        /** @author PARDON Alexandre
         /* Mettre ici tous les elements du debug */
         g2.drawString(this.debug.getIntitule(), 20, 20);
         this.bonus.render(g2,this);
         g.dispose();
+        }
     }
     
     /**
@@ -133,7 +144,7 @@ public class Game extends JPanel implements ActionListener {
     private void ouvrirDebug() {
     	if (!debug.isActiv()) {
     		debug.setActiv(true);
-    		this.FichierTxt("michel", highScore);
+    		this.FichierTxt("michel ", highScore);
     		debug.setIntitule(debug.getIntituleCalcule());
     	}else {
     		debug.setActiv(false);
@@ -194,7 +205,7 @@ public class Game extends JPanel implements ActionListener {
 
     		   FileWriter fw = new FileWriter(file.getAbsoluteFile());
     		   BufferedWriter bw = new BufferedWriter(fw);
-    		   bw.write(content);
+    		   bw.write(content); /** Ajouter une fonction avec toutes les stats a la place du content pour avoir 10 lignes de texte**/
     		   bw.close();
 
     		   System.out.println("Modification terminée!");
