@@ -52,12 +52,14 @@ public class Game extends JPanel implements ActionListener {
     private Debug debug;
     private Item bonus;
     private TableauScore tscore;
+    private int points;
+    private boolean bonusActif;
 
     public Game() {
         
         tscore = new TableauScore();
     	proxyImage1 = new ProxyImage("/assets/background.png");
-        proxyImage2 = new ProxyImage("/assets/test.gif");
+        proxyImage2 = new ProxyImage("/assets/");
         accueil = proxyImage1.loadImage().getImage();
         background = proxyImage2.loadImage().getImage();
         setFocusable(true);
@@ -66,9 +68,12 @@ public class Game extends JPanel implements ActionListener {
         Timer timer = new Timer(15, this);
         timer.start();
         debug = new Debug();
-        bonus = new Item(400,300);
-        bonus.setDx(5);
-        bonus.tick();
+        /* Init compteur */
+        points = 0;
+        bonusActif = false;
+        /* On crée le bonus*/
+        bonus = new Item();
+ 
         
         
     }
@@ -79,9 +84,28 @@ public class Game extends JPanel implements ActionListener {
         if (isRunning) {
             ////////////////////////////////
             bird.tick();
-            tubeColumn.tick();
+            tubeColumn.tick(); 
             checkColision();
             score++;
+            
+            if(this.tubeColumn.getPoints() - points  == 3) {
+            	bonusActif = true;
+            	points = this.tubeColumn.getPoints(); 
+            }
+            
+            if (bonusActif) {
+            	//Le bonus est actif on le met en mouvement car il est en dehors du background//
+            	bonus.tick();
+            }
+            // Une fois le bonus en dehors du background 
+            if(bonus.getX() < 0) {
+            	// On désactive le bonus
+            	bonusActif = false;
+            	// On réinitialise le bonus 
+            	bonus.reset();
+            }
+            
+            
             ///////////////////////////////
         }
 
@@ -102,6 +126,8 @@ public class Game extends JPanel implements ActionListener {
             g.setFont(new Font("Arial", 1, 20));
             g2.drawString("Votre score : " + this.tubeColumn.getPoints(), 10, 20);
             g2.drawString("Niveau : " +this.tubeColumn.getNiveau(), Window.WIDTH / 2 - 150, 20);
+            this.bonus.render(g2,this);
+            
             ///////////////////////////////
         } else {
             g2.setColor(Color.black);
@@ -125,7 +151,6 @@ public class Game extends JPanel implements ActionListener {
         /** @author PARDON Alexandre
         /* Mettre ici tous les elements du debug */
         g2.drawString(this.debug.getIntitule(), 20, 20);
-        this.bonus.render(g2,this);
         g.dispose();
         }
     }
