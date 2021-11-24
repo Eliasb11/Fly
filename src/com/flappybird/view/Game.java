@@ -16,6 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -24,11 +28,9 @@ import com.flappybird.controller.Controller;
 import com.flappybird.model.Bird;
 import com.flappybird.model.Debug;
 import com.flappybird.model.Item;
-import com.flappybird.model.Tube;
 import com.flappybird.model.PlayerScore;
 import com.flappybird.model.TableauScore;
-import com.flappybird.model.TubeColumn;
-import com.flappybird.model.proxy.ProxyImage;
+import com.flappybird.model.Tube;
 import com.flappybird.model.TubeColumn;
 import com.flappybird.model.proxy.ProxyImage;
 
@@ -191,7 +193,7 @@ public class Game extends JPanel implements ActionListener {
         }
     }
     
-<<<<<<< Updated upstream
+
     
     /**
      * @author BELABOU Elias
@@ -222,8 +224,8 @@ public class Game extends JPanel implements ActionListener {
     		 }
     	
 
-=======
->>>>>>> Stashed changes
+
+
     
 
     // Key
