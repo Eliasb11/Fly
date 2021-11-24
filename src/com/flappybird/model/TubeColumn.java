@@ -26,6 +26,7 @@ public class TubeColumn {
     private int points = 0;
     private int speed = 5;
     private int changeSpeed = speed;
+    private int niveau = 0;
 
     public TubeColumn() {
         tubes = new ArrayList<>();
@@ -64,8 +65,10 @@ public class TubeColumn {
             this.points += 1;
             if (changeSpeed == points) {
                 this.speed += 1;
-                changeSpeed += 5;
-                System.out.println(speed);
+                
+                if (this.points%5 == 0 && this.points > 0 ) {
+                	this.niveau++;
+                }
                 
             }
             initTubes();
@@ -90,6 +93,10 @@ public class TubeColumn {
 
     public int getPoints() {
         return points;
+    }
+    
+    public int getNiveau() {
+    	return niveau;
     }
 
     public void setPoints(int points) {
