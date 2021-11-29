@@ -74,4 +74,16 @@ public class Bird extends GameObject {
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
     }
+	
+    
+    public ProxyImage getProxyImage() {
+		return proxyImage;
+	}
+	
+    
+    public void setProxyImage(ProxyImage proxyImage) {
+		this.proxyImage = proxyImage;
+	}
+    
+    
 }

@@ -20,6 +20,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -28,6 +30,10 @@ import com.flappybird.controller.Controller;
 import com.flappybird.model.Bird;
 import com.flappybird.model.Debug;
 import com.flappybird.model.Item;
+import com.flappybird.model.ItemAccelerer;
+import com.flappybird.model.ItemAgrandir;
+import com.flappybird.model.ItemRalentir;
+import com.flappybird.model.ItemRetrecir;
 import com.flappybird.model.PlayerScore;
 import com.flappybird.model.TableauScore;
 import com.flappybird.model.Tube;
@@ -50,10 +56,10 @@ public class Game extends JPanel implements ActionListener {
     private int score;
     private int highScore;
     private Debug debug;
-    private Item bonus;
+    private List<Item> items;
     private TableauScore tscore;
-    private int points;
-    private boolean bonusActif;
+    private Graphics2D g2;
+    private boolean invinsible;
 
     public Game() {
         
@@ -65,18 +71,25 @@ public class Game extends JPanel implements ActionListener {
         setFocusable(true);
         setDoubleBuffered(false);
         addKeyListener(new GameKeyAdapter());
-        Timer timer = new Timer(15, this);
+        Timer timer = new Timer(5, this);
         timer.start();
         debug = new Debug();
-        /* Init compteur */
-        points = 0;
-        bonusActif = false;
-        /* On crée le bonus*/
-        bonus = new Item();
- 
+
+     
+        /* On crï¿½e les bonus*/
+        /* D'abord on initialise la liste qui va contenir les items */
+        items = new ArrayList<>();
+        /* On ajoute les items choisis a la liste */
+//       items.add(new ItemAgrandir());
+//       items.add(new ItemRetrecir());
+        items.add(new ItemRalentir());
+        items.add(new ItemAccelerer());
+
         
         
     }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -85,28 +98,37 @@ public class Game extends JPanel implements ActionListener {
             ////////////////////////////////
             bird.tick();
             tubeColumn.tick(); 
-            checkColision();
+            if (!invinsible) {
+            	 checkColision();
+            }
+           
+            checkColisionBonusMalus();
             score++;
+            //System.out.println(timer.get);
             
-            if(this.tubeColumn.getPoints() - points  == 3) {
-            	bonusActif = true;
-            	points = this.tubeColumn.getPoints(); 
+            /////////////////////////////// GESTION DES ITEMS ////////////////
+            for (Item item : this.items) {
+            	
+            	 if(this.tubeColumn.getPoints() - item.getCompteurScore()  == item.getNumPop()) {
+            		 /* on active l'item */
+            		 item.setActif(true);
+            		 item.setCompteurScore(this.tubeColumn.getPoints());
+            	 }
+            	 
+            	 if (item.isActif()) {
+            		 item.tick();
+            		 item.checkOut();
+            	 }           
+            	 
+            	 /* SI le item est appliquÃ© et qu'on a passÃ© X tube on desactive.*/
+            	 if(item.isApplique() && this.tubeColumn.getPoints() - item.getNumTubePasse() >= Item.numDureeTube) {
+         			item.desactiver(this);
+        		 }
+            	 
             }
-            
-            if (bonusActif) {
-            	//Le bonus est actif on le met en mouvement car il est en dehors du background//
-            	bonus.tick();
-            }
-            // Une fois le bonus en dehors du background 
-            if(bonus.getX() < 0) {
-            	// On désactive le bonus
-            	bonusActif = false;
-            	// On réinitialise le bonus 
-            	bonus.reset();
-            }
-            
-            
-            ///////////////////////////////
+ 
+            /////////////////////////////// ///////////////  ////////////////
+   
         }
 
         repaint();
@@ -115,6 +137,7 @@ public class Game extends JPanel implements ActionListener {
     @Override
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
+        this.g2 = g2;
         g2.drawImage(accueil, 0, 0, null);
         //d'abord l'accueil s'affiche, et quand on met la variable isRunning a true, le background modifiable s'active
         if (isRunning) {
@@ -126,7 +149,10 @@ public class Game extends JPanel implements ActionListener {
             g.setFont(new Font("Arial", 1, 20));
             g2.drawString("Votre score : " + this.tubeColumn.getPoints(), 10, 20);
             g2.drawString("Niveau : " +this.tubeColumn.getNiveau(), Window.WIDTH / 2 - 150, 20);
-            this.bonus.render(g2,this);
+            /* On parcoure les items et on les materialisent (en dehors de la fenetre dans un premir temps)*/
+            for(Item item : items) {
+            	item.render(g2, this);
+            }
             
             ///////////////////////////////
         } else {
@@ -218,6 +244,27 @@ public class Game extends JPanel implements ActionListener {
         }
     }
     
+    
+    
+    /**
+     * Methode pour verifier si on passe sur le bonus.
+     */
+    private void checkColisionBonusMalus() {
+    	/* Le recangle correspodant ou */ 
+    	Rectangle rectBird = this.bird.getBounds();
+    	
+    	for (Item item : items) {
+	    	if (rectBird.intersects(item.getBounds())){
+	    		System.out.println("colision bonus");
+	    		item.setActif(false);
+	    		item.reset();
+	    		item.appliquer(this);
+	    		this.bird.render(g2, this);
+	    	}
+    	}
+    }
+    
+    
 
     
     /**
@@ -250,6 +297,7 @@ public class Game extends JPanel implements ActionListener {
     	
 
 
+    
 
     
 
@@ -281,4 +329,57 @@ public class Game extends JPanel implements ActionListener {
             }
     }
     }
+
+
+
+
+	public Bird getBird() {
+		return bird;
+	}
+
+
+
+	public void setBird(Bird bird) {
+		this.bird = bird;
+	}
+
+
+
+	public Graphics2D getG2() {
+		return g2;
+	}
+
+
+
+	public void setG2(Graphics2D g2) {
+		this.g2 = g2;
+	}
+
+
+
+	public TubeColumn getTubeColumn() {
+		return tubeColumn;
+	}
+
+
+
+	public void setTubeColumn(TubeColumn tubeColumn) {
+		this.tubeColumn = tubeColumn;
+	}
+
+
+
+	public boolean isInvinsible() {
+		return invinsible;
+	}
+
+
+
+	public void setInvinsible(boolean invinsible) {
+		this.invinsible = invinsible;
+	}
+    
+	
+	
+    
 }

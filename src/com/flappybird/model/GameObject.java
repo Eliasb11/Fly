@@ -18,6 +18,11 @@ public abstract class GameObject {
     protected int dx, dy;
     protected int width, height;
     protected Image image;
+    
+    
+    public GameObject() {
+    	
+    }
 
     public GameObject(int x, int y) {
         this.x = x;

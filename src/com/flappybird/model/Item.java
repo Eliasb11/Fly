@@ -4,36 +4,45 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
 import java.util.Random;
-
 import com.flappybird.model.proxy.ProxyImage;
-import com.flappybird.view.Window;
+import com.flappybird.view.Game;
+
 
 public class Item extends GameObject {
 
-	private ProxyImage proxyImage;
-	int randNumb = 0;
-	int squareWidth = 25;
-	int squareHeight = 25;
-	int squareYLocation = -squareHeight;
-
+	protected ProxyImage proxyImage;
+	/*Numero qui indique tous les combiens de tube (score) apparait l'item  */
+	protected Integer numPop;
+	/* Numero qui la durÃ©e d'activation d'un item en nombre de tube passÃ©  */
+	protected Integer numTubePasse;
+	
+	
+	/* Indique si l'item est actif */
+	protected boolean actif;
+	
+	protected boolean applique;
+	
+	/* Le score du dernier pop */
+	protected int compteurScore;
+	
 	/* Position initiale de l'item. */
 	public static final int initialX = 780;
+	/* Par dÃ©faut un bonus dure 2 tubes */
+	public static final int numDureeTube = 2;
 	
-	public Item() {
-		this(initialX, getRandomInt()); 
-	}
-	
-	public Item(int x, int y) {
-		super(x, y);
-		if (proxyImage == null) {
-			proxyImage = new ProxyImage("/assets/avionGrand.gif");
-
-		}
+	public Item(ProxyImage proxyImage) {
 		this.image = proxyImage.loadImage().getImage();
 		this.width = image.getWidth(null);
 		this.height = image.getHeight(null);
-		this.dx = 5;
+        this.x = initialX;
+        this.y = getRandomHeight();
+        this.dx = 5;
+        numPop = 1;
+        numPop = getRandomPop();
+        numTubePasse = 0;
 	}
+	
+	
 	@Override
 	public void render(Graphics2D g, ImageObserver obs) {
 		g.drawImage(image, x, y, obs);
@@ -41,143 +50,121 @@ public class Item extends GameObject {
 	}
 	@Override
 	public void tick() {
-		// TODO Stub de la méthode généré automatiquement
+		// TODO Stub de la mï¿½thode gï¿½nï¿½rï¿½ automatiquement
 		this.x -= dx;
 	}
 	
 	
 	/**
+	 * Fonction qui retourne le rectangle correspondant a l'item
+	 * @return
+	 */
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
+    }
+    
+	
+	/**
 	 * Remet l'item en position initiale en dehors du background
-	 *  et calcule une plage aléatoire pour sa prochaine apparition sur l'axe y
+	 *  et calcule une plage alï¿½atoire pour sa prochaine apparition sur l'axe y
 	 */
 	public void reset() {
 		this.x = initialX;
-		this.y = getRandomInt();
+		this.y = getRandomHeight();
+		System.out.println("reset a = "+ this.y);
+		
+		//A activer si on souhaite avoir un pop aleatoire a chaque item passï¿½.
+		//this.numPop = getRandomPop();
 	}
 	/**
-	 * Génere un entier aléatoire 
+	 * Gï¿½nere un entier alï¿½atoire pour la position de l'item su l'axe Y
 	 * @return int
 	 */
-	public static int getRandomInt() {
+	public static int getRandomHeight() {
 		return new Random().nextInt(400 - 200 + 1) + 200;
 	}
+	
+	
+	/**
+	 * Genere un entier aleatoire pour gï¿½rï¿½ le pop des items.
+	 * @return
+	 */
+	protected int getRandomPop() {
+		return new Random().nextInt(3 - 1 + 1) + 1;
+	}
 
-	/*@Override
-	    public void tick() {
-	        this.x -= dx;
-	    }
-
-	    public void generateRandomNumber() {
-	        Random rand = new Random();
-	        randNumb = rand.nextInt(Window.WIDTH - squareWidth);
-	        numberCreated = true;
-	    }
-
-	    //paints a black screen, then paints a rectangle on top of the black screen
-	    public void paint(Graphics g) {
-	        g.setColor(Color.black);
-	        g.fillRect(0, 0, windowWidth, windowHeight);
-	        g.setColor(Color.BLUE);
-	        g.fillRect(randNumb, squareYLocation, squareWidth, squareHeight);
-	    }
-
-	    public void update() {
-
-	        //calls the generateRandomNumber() method which gives the square a random x value inside the screen
-	        if (!numberCreated) {
-	            generateRandomNumber();
-	        }
-	        //moves the squares y coordinate towards the bottom of the screen and stops once it hits the bottom
-	        if (squareYLocation <= windowHeight) {
-	            squapublic void generateRandomNumber() {
-	                Random rand = new Random();
-	                randNumb = rand.nextInt(windowWidth - squareWidth);
-	                numberCreated = true;
-	            }
-
-	            //paints a black screen, then paints a rectangle on top of the black screen
-	            public void paint(Graphics g) {
-	                g.setColor(Color.black);
-	                g.fillRect(0, 0, windowWidth, windowHeight);
-	                g.setColor(Color.BLUE);
-	                g.fillRect(randNumb, squareYLocation, squareWidth, squareHeight);
-	            }
-
-	            public void update() {
-
-	                //calls the generateRandomNumber() method which gives the square a random x value inside the screen
-	                if (!numberCreated) {
-	                    generateRandomNumber();
-	                }
-	                //moves the squares y coordinate towards the bottom of the screen and stops once it hits the bottom
-	                if (squareYLocation <= windowHeight) {
-	                	public void generateRandomNumber() {
-	                        Random rand = new Random();
-	                        randNumb = rand.nextInt(windowWidth - squareWidth);
-	                        numberCreated = true;
-	                    }
-
-	                    //paints a black screen, then paints a rectangle on top of the black screen
-	                    public void paint(Graphics g) {
-	                        g.setColor(Color.black);
-	                        g.fillRect(0, 0, windowWidth, windowHeight);
-	                        g.setColor(Color.BLUE);
-	                        g.fillRect(randNumb, squareYLocation, squareWidth, squareHeight);
-	                    }
-
-	                    public void update() {
-
-	                        //calls the generateRandomNumber() method which gives the square a random x value inside the screen
-	                        if (!numberCreated) {
-	                            generateRandomNumber();
-	                        }
-	                        //moves the squares y coordinate towards the bottom of the screen and stops once it hits the bottom
-	                        if (squareYLocation <= windowHeight) {
-	                            squareYLocation++;
-
-	                            //resets the x and y location to a new position
-	                        } else {
-	                            numberCreated = false;
-	                            squareYLocation = -squareHeight;
-	                        }
-	                    }
-
-	                    //sets the while loop to true to start the game
-	                    public void start() {
-	                        gameRunning = true;
-	                    }     squareYLocation++;
-
-	                    //resets the x and y location to a new position
-	                } else {
-	                    numberCreated = false;
-	                    squareYLocation = -squareHeight;
-	                }
-	            }
-
-	            //sets the while loop to true to start the game
-	            public void start() {
-	                gameRunning = true;
-	            }reYLocation++;
-
-	            //resets the x and y location to a new position
-	        } else {
-	            numberCreated = false;
-	            squareYLocation = -squareHeight;
-	        }
-	    }
-
-	    //sets the while loop to true to start the game
-	    public void start() {
-	        gameRunning = true;
-	    }
-	    @Override
-	    public void render(Graphics2D g, ImageObserver obs) {
-	        g.drawImage(image, x, y, obs);
-
-	    }
+	
+	/* On crÃ©e ici la methode vide, pour pouvoir l'override (rÃ©ecrire) dans les classe fille */  
+	public void appliquer(Game game) {
+	}
+	
+	
+	public void desactiver(Game game) {
+	}
+	
+	
+	public Integer getNumPop() {
+		return numPop;
+	}
 
 
-	    public Rectangle getBounds() {
-	        return new Rectangle(x, y, width, height);
-	    }*/
+	public void setNumPop(Integer numPop) {
+		this.numPop = numPop;
+	}
+
+
+	public boolean isActif() {
+		return actif;
+	}
+
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+
+
+	public int getCompteurScore() {
+		return compteurScore;
+	}
+
+
+	public void setCompteurScore(int compteurScore) {
+		this.compteurScore = compteurScore;
+	}
+	
+	/**
+	 * Methode appel pour verifier si l'item est sortie de l'ecran.
+	 * Si il est sorti, on le desactive et on le reset.
+	 */
+	public void checkOut() {
+		if (this.x < 0) {
+			this.actif = false;		
+			this.reset();
+		}		
+		
+	}
+
+
+	public Integer getNumTubePasse() {
+		return numTubePasse;
+	}
+
+
+	public void setNumTubePasse(Integer numTubePasse) {
+		this.numTubePasse = numTubePasse;
+	}
+
+
+	public boolean isApplique() {
+		return applique;
+	}
+
+
+	public void setApplique(boolean applique) {
+		this.applique = applique;
+	}
+	
+	
+	
+	
 }

@@ -6,6 +6,8 @@
 package com.flappybird.model;
 
 import com.flappybird.model.proxy.ProxyImage;
+import com.flappybird.view.Game;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
@@ -43,4 +45,9 @@ public class Tube extends GameObject {
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
     }
+    
+    
+	public void appliquer(Game game) {
+
+	}
 }
