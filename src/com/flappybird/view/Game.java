@@ -31,9 +31,8 @@ import com.flappybird.model.Bird;
 import com.flappybird.model.Debug;
 import com.flappybird.model.Item;
 import com.flappybird.model.ItemAccelerer;
-import com.flappybird.model.ItemAgrandir;
+import com.flappybird.model.ItemInvincible;
 import com.flappybird.model.ItemRalentir;
-import com.flappybird.model.ItemRetrecir;
 import com.flappybird.model.PlayerScore;
 import com.flappybird.model.TableauScore;
 import com.flappybird.model.Tube;
@@ -59,7 +58,7 @@ public class Game extends JPanel implements ActionListener {
     private List<Item> items;
     private TableauScore tscore;
     private Graphics2D g2;
-    private boolean invinsible;
+    private boolean invincible;
 
     public Game() {
         
@@ -84,6 +83,7 @@ public class Game extends JPanel implements ActionListener {
 //       items.add(new ItemRetrecir());
         items.add(new ItemRalentir());
         items.add(new ItemAccelerer());
+        items.add(new ItemInvincible());
 
         
         
@@ -98,7 +98,7 @@ public class Game extends JPanel implements ActionListener {
             ////////////////////////////////
             bird.tick();
             tubeColumn.tick(); 
-            if (!invinsible) {
+            if (!invincible) {
             	 checkColision();
             }
            
@@ -369,14 +369,14 @@ public class Game extends JPanel implements ActionListener {
 
 
 
-	public boolean isInvinsible() {
-		return invinsible;
+	public boolean isInvincible() {
+		return invincible;
 	}
 
 
 
-	public void setInvinsible(boolean invinsible) {
-		this.invinsible = invinsible;
+	public void setInvincible(boolean invincible) {
+		this.invincible = invincible;
 	}
     
 	

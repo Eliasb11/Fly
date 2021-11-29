@@ -5,7 +5,7 @@ import com.flappybird.view.Game;
 
 public class ItemAccelerer extends Item {
 	public ItemAccelerer() {
-		super(new ProxyImage("/assets/avionGrand.gif"));
+		super(new ProxyImage("/assets/EtoileJauneAccelere.png"));
 	}
 	
 	

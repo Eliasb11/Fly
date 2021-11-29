@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
 import java.util.Random;
+
 import com.flappybird.model.proxy.ProxyImage;
 import com.flappybird.view.Game;
 

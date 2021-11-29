@@ -5,7 +5,7 @@ import com.flappybird.view.Game;
 
 public class ItemRalentir extends Item {
 	public ItemRalentir() {
-		super(new ProxyImage("/assets/avionGrand.gif"));
+		super(new ProxyImage("/assets/EtoileBleueRalentit.png"));
 	}
 	@Override
 	public void appliquer(Game game) {

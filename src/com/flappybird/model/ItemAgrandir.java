@@ -7,7 +7,7 @@ public class ItemAgrandir extends Item {
 
 	
 	public ItemAgrandir() {
-		super(new ProxyImage("/assets/avionGrand.gif"));
+		super(new ProxyImage("/assets/EtoileRoseAgrandit.png"));
 	}
 	
 	
