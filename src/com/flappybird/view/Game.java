@@ -70,7 +70,7 @@ public class Game extends JPanel implements ActionListener {
         setFocusable(true);
         setDoubleBuffered(false);
         addKeyListener(new GameKeyAdapter());
-        Timer timer = new Timer(5, this);
+        Timer timer = new Timer(1, this);
         timer.start();
         debug = new Debug();
 
