@@ -132,7 +132,7 @@ public class Game extends JPanel implements ActionListener {
         } else {
             g2.setColor(Color.black);
              g.setFont(new Font("Arial", 1, 20));
-            g2.drawString("Appuyez sur la touche 'Entrée' pour jouer", Window.WIDTH / 2 - 150, Window.HEIGHT / 2);
+            g2.drawString("Appuyez sur la touche 'EntrÃ©e' pour jouer", Window.WIDTH / 2 - 150, Window.HEIGHT / 2);
             g2.setColor(Color.black);
             g.setFont(new Font("Arial", 1, 15));
             g2.drawString("Powered by LaFlyTeam", Window.WIDTH - 200, Window.HEIGHT - 50);
@@ -225,7 +225,7 @@ public class Game extends JPanel implements ActionListener {
      * Creation d'un fichier texte avec le score et le nom du joueur
      */    
     private void FichierTxt(String nom, int score){
-    	  try {
+    	try {
 
     		   String content = nom + score;
 
@@ -245,8 +245,8 @@ public class Game extends JPanel implements ActionListener {
 
     		  } catch (IOException e) {
     		   e.printStackTrace();
-    		  }
-    		 }
+    	}
+    }
     	
 
 
