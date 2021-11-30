@@ -3,6 +3,11 @@ package com.flappybird.model;
 import com.flappybird.model.proxy.ProxyImage;
 import com.flappybird.view.Game;
 
+/**
+ * 
+ * @author  Alexandre Pardon
+ *
+ */
 public class ItemRalentir extends Item {
 	public ItemRalentir() {
 		super(new ProxyImage("/assets/EtoileBleueRalentit.png"));
@@ -17,7 +22,6 @@ public class ItemRalentir extends Item {
 	
 	@Override
 	public void desactiver(Game game) {
-		int vitesseActuelle = game.getTubeColumn().getSpeed();
 		game.getTubeColumn().setSpeed(5);
 		this.applique = false;
 	}

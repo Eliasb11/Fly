@@ -7,14 +7,14 @@ public class ItemRetrecir extends Item {
 	
 	
 	public ItemRetrecir() {
-		super(new ProxyImage("/assets/avionGrand.gif"));
+		super(new ProxyImage("/assets/EtoileVerteRetrecit.png"));
 	}
 	
 	
 	@Override
 	public void appliquer(Game game) {	
 		Bird bird = game.getBird();
-		game.getBird().setProxyImage(new ProxyImage("/assets/birdGrand.gif"));
+		game.getBird().setProxyImage(new ProxyImage("/assets/DracaufeuPetit.gif"));
 		bird.setImage(game.getBird().getProxyImage().loadImage().getImage());
 		bird.setWidth(bird.getImage().getWidth(null));
 		bird.setHeight(bird.getImage().getHeight(null));
@@ -26,7 +26,7 @@ public class ItemRetrecir extends Item {
 	
 	public void  desactiver(Game game) {
 		Bird bird = game.getBird();
-		bird.setProxyImage(new ProxyImage("/assets/DracaufeuPetit.gif"));
+		bird.setProxyImage(new ProxyImage("/assets/DracaufeuNormal.gif"));
 		bird.setImage(game.getBird().getProxyImage().loadImage().getImage());
 		bird.setWidth(bird.getImage().getWidth(null));
 		bird.setHeight(bird.getImage().getHeight(null));

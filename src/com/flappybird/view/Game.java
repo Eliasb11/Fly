@@ -31,8 +31,10 @@ import com.flappybird.model.Bird;
 import com.flappybird.model.Debug;
 import com.flappybird.model.Item;
 import com.flappybird.model.ItemAccelerer;
+import com.flappybird.model.ItemAgrandir;
 import com.flappybird.model.ItemInvincible;
 import com.flappybird.model.ItemRalentir;
+import com.flappybird.model.ItemRetrecir;
 import com.flappybird.model.PlayerScore;
 import com.flappybird.model.TableauScore;
 import com.flappybird.model.Tube;
@@ -45,26 +47,30 @@ import com.flappybird.model.proxy.ProxyImage;
  */
 public class Game extends JPanel implements ActionListener {
 
-    private boolean isRunning = false;
+
+	private static final long serialVersionUID = 5792460321992629737L;
+	
+	
+	private boolean isRunning = false;
     private ProxyImage proxyImage1;
     private ProxyImage proxyImage2;
     private Image accueil;
     private Image background;
     private Bird bird;
     private TubeColumn tubeColumn;
-    private int score;
     private int highScore;
     private Debug debug;
     private List<Item> items;
     private TableauScore tscore;
     private Graphics2D g2;
+    /* boolean special pour l'item ItemInvincible */
     private boolean invincible;
 
     public Game() {
         
         tscore = new TableauScore();
     	proxyImage1 = new ProxyImage("/assets/background.png");
-        proxyImage2 = new ProxyImage("/assets/");
+        proxyImage2 = new ProxyImage("/assets/Paysageplanete.png");
         accueil = proxyImage1.loadImage().getImage();
         background = proxyImage2.loadImage().getImage();
         setFocusable(true);
@@ -75,22 +81,17 @@ public class Game extends JPanel implements ActionListener {
         debug = new Debug();
 
      
-        /* On cr�e les bonus*/
-        /* D'abord on initialise la liste qui va contenir les items */
-        items = new ArrayList<>();
-        /* On ajoute les items choisis a la liste */
-//       items.add(new ItemAgrandir());
-//       items.add(new ItemRetrecir());
-        items.add(new ItemRalentir());
-        items.add(new ItemAccelerer());
-        items.add(new ItemInvincible());
-
+       /* On créé les bonus*/
+        initItems();
         
         
     }
     
     
 
+    /**
+     * Methode appellée en boucle pour gérer les actions du jeux.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Toolkit.getDefaultToolkit().sync();
@@ -98,30 +99,34 @@ public class Game extends JPanel implements ActionListener {
             ////////////////////////////////
             bird.tick();
             tubeColumn.tick(); 
+            
+            /* Si le pouvoir itemInvincible est actif on ne check pas les colisions */
             if (!invincible) {
             	 checkColision();
             }
            
-            checkColisionBonusMalus();
-            score++;
-            //System.out.println(timer.get);
-            
-            /////////////////////////////// GESTION DES ITEMS ////////////////
+            checkColisionItem();
+
+
+            /////////////////////////////// GESTION DES ITEMS - Alexandre Pardon  ////////////////
             for (Item item : this.items) {
             	
+            	/** Si la différence entre le score actuel et le score lors du derniere pop de d'item est egale au nombrePop alors on le fait poper a nouveau*/
             	 if(this.tubeColumn.getPoints() - item.getCompteurScore()  == item.getNumPop()) {
             		 /* on active l'item */
             		 item.setActif(true);
+            		 /* On maj le score de ce pop */
             		 item.setCompteurScore(this.tubeColumn.getPoints());
             	 }
             	 
+            	 /* Si l'item est affiché, on le fait bouger et on appelle checkout pour verifier la sortie de l'ecran */
             	 if (item.isActif()) {
             		 item.tick();
             		 item.checkOut();
             	 }           
             	 
-            	 /* SI le item est appliqué et qu'on a passé X tube on desactive.*/
-            	 if(item.isApplique() && this.tubeColumn.getPoints() - item.getNumTubePasse() >= Item.numDureeTube) {
+            	 /* SI le pouvoir de item est appliqué et qu'on a passé X tube on desactive.*/
+            	 if(item.isApplique() && this.tubeColumn.getPoints() - item.getNumTubePasse() >= item.getNumDureeTube()) {
          			item.desactiver(this);
         		 }
             	 
@@ -203,6 +208,9 @@ public class Game extends JPanel implements ActionListener {
             this.isRunning = true;
             this.bird = new Bird(Window.WIDTH / 2, Window.HEIGHT / 2);
             this.tubeColumn = new TubeColumn();
+            /* RAZ des itemss*/
+            this.items = new ArrayList<>();
+            initItems();
         }
     }
 
@@ -247,9 +255,10 @@ public class Game extends JPanel implements ActionListener {
     
     
     /**
-     * Methode pour verifier si on passe sur le bonus.
+     * @author Alexandre Pardon
+     * Methode pour verifier si on passe sur un item .
      */
-    private void checkColisionBonusMalus() {
+    private void checkColisionItem() {
     	/* Le recangle correspodant ou */ 
     	Rectangle rectBird = this.bird.getBounds();
     	
@@ -380,6 +389,21 @@ public class Game extends JPanel implements ActionListener {
 	}
     
 	
+	/**
+	 * Gestion des items
+	 * Initialise la liste d'item est ajoute les items 
+	 */
+	public void initItems() {
+       /* D'abord on initialise la liste qui va contenir les items */
+       items = new ArrayList<>();
+        /* On ajoute les items choisis a la liste */
+       items.add(new ItemAgrandir());
+       items.add(new ItemRetrecir());
+       items.add(new ItemRalentir());
+       items.add(new ItemAccelerer());
+       items.add(new ItemInvincible());
+
+	}
 	
     
 }
