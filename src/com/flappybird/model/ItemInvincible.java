@@ -11,7 +11,7 @@ import com.flappybird.view.Game;
 public class ItemInvincible extends Item {
 	
 	public ItemInvincible() {
-		super(new ProxyImage("/assets/EtoileOrInvincible.gif"));
+		super(new ProxyImage("/assets/EtoileInvincible.png"));
 		numDureeTube = 5;
 	}
 	
