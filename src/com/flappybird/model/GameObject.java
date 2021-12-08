@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.flappybird.model;
 
 import java.awt.Graphics2D;
@@ -11,8 +7,11 @@ import java.awt.image.ImageObserver;
 
 /**
  *
- * @author derickfelix
+ * @author FlyTeam
  */
+//@alain Creation de la classe abstraite qui sera utilisée par tous les objets du jeu, 
+//cela pourra nous permettre de faire interagir les differents objets en fonction de leurs dimensions
+// Modifier leur taille, ou la recuperer, 
 public abstract class GameObject {
     protected int x, y;
     protected int dx, dy;

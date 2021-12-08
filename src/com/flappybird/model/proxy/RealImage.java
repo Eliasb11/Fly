@@ -1,24 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.flappybird.model.proxy;
 
 import javax.swing.ImageIcon;
 
 /**
  *
- * @author derickfelix
+ * @author FlyTeam
  */
 public class RealImage implements IImage {
 
     private final String src;
     private ImageIcon imageIcon;
     
+    /**
+     * @param src
+     */
     public RealImage(String src) {
         this.src = src;
     }
+    //@alain Methode permettant d'attribuer le type ImageIcon à une image chargée a partir d'une URL 
     @Override
     public ImageIcon loadImage() {
         if(imageIcon == null) {

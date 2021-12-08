@@ -1,5 +1,10 @@
 package com.flappybird.model;
 
+/**
+ * 
+ * @author Alain Habyalimana
+ *
+ */
 public class PlayerScore {
 
 	private String pseudo;

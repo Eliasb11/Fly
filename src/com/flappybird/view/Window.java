@@ -11,8 +11,9 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author derickfelix
+ * @author flyTeam
  */
+//creation de la fenêtre
 public class Window {
     public static int WIDTH = 800;
     public static int HEIGHT = 600;
@@ -30,20 +31,15 @@ public class Window {
         
     }
     public static void main(String[] args) {
+    	
         Game game = new Game();
         
-        /* Set the System look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        /* Create and display the form */
+ 
         java.awt.EventQueue.invokeLater(() -> {
             
             Window window = new Window(WIDTH, HEIGHT, "Flappy Bird", game);

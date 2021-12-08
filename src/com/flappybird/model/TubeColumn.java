@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.flappybird.model;
 
 import com.flappybird.view.Window;
@@ -15,7 +10,7 @@ import java.util.Random;
 
 /**
  *
- * @author derickfelix
+ * @author FlyTeam
  */
 public class TubeColumn {
 
@@ -28,12 +23,14 @@ public class TubeColumn {
     private int changeSpeed = speed;
     private int niveau = 0;
 
+    //création d'une liste de tubes
     public TubeColumn() {
         tubes = new ArrayList<>();
         random = new Random();
         initTubes();
     }
 
+    //methode permettant initialiser les tubes
     private void initTubes() {
 
         int last = base;
@@ -52,6 +49,7 @@ public class TubeColumn {
 
     }
 
+    //methode gérant les tubes au cours du jeu
     public void tick() {
 
         for (int i = 0; i < tubes.size(); i++) {
@@ -61,6 +59,8 @@ public class TubeColumn {
                 tubes.remove(tubes.get(i));
             }
         }
+        //// Habyalimana Alain //
+        // Changement de vitesse et augmentation du niveau tous les 5 points//
         if (tubes.isEmpty()) {
             this.points += 1;
             if (changeSpeed == points) {

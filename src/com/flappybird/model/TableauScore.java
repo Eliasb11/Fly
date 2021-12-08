@@ -2,6 +2,11 @@ package com.flappybird.model;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Alain Habyalimana
+ *
+ */
 public class TableauScore {
 	
 	private ArrayList<PlayerScore> scores; 

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.flappybird.view;
 
 import java.awt.Color;
@@ -79,6 +75,7 @@ public class Game extends JPanel implements ActionListener {
         Timer timer = new Timer(1, this);
         timer.start();
         debug = new Debug();
+        
 
      
        /* On créé les bonus*/
@@ -144,7 +141,7 @@ public class Game extends JPanel implements ActionListener {
         Graphics2D g2 = (Graphics2D) g;
         this.g2 = g2;
         g2.drawImage(accueil, 0, 0, null);
-        //d'abord l'accueil s'affiche, et quand on met la variable isRunning a true, le background modifiable s'active
+        //@alain d'abord l'accueil s'affiche, et quand on met la variable isRunning a true, le background s'active
         if (isRunning) {
             ///////////////////////////////
         	g2.drawImage(background, 0, 0, null);
@@ -152,6 +149,7 @@ public class Game extends JPanel implements ActionListener {
             this.tubeColumn.render(g2, this);
             g2.setColor(Color.black);
             g.setFont(new Font("Arial", 1, 20));
+            //appel des valeurs de getNiveau et getPoints 
             g2.drawString("Votre score : " + this.tubeColumn.getPoints(), 10, 20);
             g2.drawString("Niveau : " +this.tubeColumn.getNiveau(), Window.WIDTH / 2 - 150, 20);
             /* On parcoure les items et on les materialisent (en dehors de la fenetre dans un premir temps)*/
@@ -216,6 +214,7 @@ public class Game extends JPanel implements ActionListener {
 
     
    /**
+    * Alain Habyalimana
      * Methode privée qui finit la partie, remet les points a zero, et ajoute le score dans un tableau 
      */
     private void endGame() {
@@ -234,8 +233,8 @@ public class Game extends JPanel implements ActionListener {
         
     }
 
-    /**
-     * Methode privée qui finit la partie, remet les points a zero, et ajoute le score dans un tableau 
+    /** @author Alain Habyalimana
+     * Methode priv�e qui verifie si ya eu une collision entre l'oiseau et un tuyau 
      */
     private void checkColision() {
         Rectangle rectBird = this.bird.getBounds();
@@ -245,6 +244,7 @@ public class Game extends JPanel implements ActionListener {
             Tube tempTube = this.tubeColumn.getTubes().get(i);
             rectTube = tempTube.getBounds();
             if (rectBird.intersects(rectTube)) {
+            //rajout de la verification IsRunning sinon ca tourne a l'infini	
               if(this.isRunning) {
                 	endGame();                	
                 }
@@ -326,8 +326,8 @@ public class Game extends JPanel implements ActionListener {
             }
         }
 
-        
-        @Override
+        //Alappui de la touche F1, appel de la methode permettant de recuperer les donn�es du jeu
+        @Override 
         public void keyReleased(KeyEvent e) {
             if (isRunning) {
                 controller.controllerReleased(bird, e);

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.flappybird.model;
 
 import com.flappybird.model.proxy.ProxyImage;
@@ -13,12 +9,17 @@ import java.awt.image.ImageObserver;
 
 /**
  *
- * @author derickfelix
+ * @author FlyTeam
  */
 public class Bird extends GameObject {
 
+	
     private ProxyImage proxyImage;
     private Tube[] tube;
+    /** Creation de l'oiseau en debut de partie, il est a des distances bien precises du premier tube
+     * @param x
+     * @param y
+     */
     public Bird(int x, int y){
         super(x, y);
         if(proxyImage == null) {
@@ -42,6 +43,7 @@ public class Bird extends GameObject {
         tube[0].tick();
         checkWindowBorder();
     }
+    //hauteur a chaque saut
     public void jump() {
         if(dy > 0) {
             dy = 0;
@@ -49,6 +51,7 @@ public class Bird extends GameObject {
         dy -= 15;
     }
     
+    //position de l'oiseau au debut de partie dans la fentre
     private void checkWindowBorder() {
         if(this.x > Window.WIDTH) {
             this.x = Window.WIDTH;

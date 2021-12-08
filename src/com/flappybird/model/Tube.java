@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.flappybird.model;
 
 import com.flappybird.model.proxy.ProxyImage;
@@ -14,11 +10,16 @@ import java.awt.image.ImageObserver;
 
 /**
  *
- * @author derickfelix
+ * @author FlyTeam
  */
 public class Tube extends GameObject {
 
     private ProxyImage proxyImage;
+    
+    /** creation du tube avec l'image
+     * @param x
+     * @param y
+     */
     public Tube(int x, int y) {
         super(x, y);
         if (proxyImage == null) {
