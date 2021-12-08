@@ -1,7 +1,6 @@
 package com.flappybird.model;
 
 import java.util.Date;
-import java.util.List;
 /**
  * Classe modelisant le mode Debug
  * Contient les infos du mode debug
@@ -13,7 +12,6 @@ public class Debug {
 	private boolean activ;
 	private String intitule;
 	private String hightScore;
-	private List<String> dernierScore;
 	private Date date;
 	
 

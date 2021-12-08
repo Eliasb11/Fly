@@ -14,11 +14,12 @@ public class ItemRetrecir extends Item {
 	@Override
 	public void appliquer(Game game) {	
 		Bird bird = game.getBird();
-		game.getBird().setProxyImage(new ProxyImage("/assets/DracaufeuPetit.gif"));
+		game.getBird().setProxyImage(new ProxyImage("/assets/AvionPetit.gif"));
 		bird.setImage(game.getBird().getProxyImage().loadImage().getImage());
 		bird.setWidth(bird.getImage().getWidth(null));
 		bird.setHeight(bird.getImage().getHeight(null));
 		bird.render(game.getG2(), game);
+		this.applique = true;
 		this.numTubePasse = game.getTubeColumn().getPoints();
 	}
 	

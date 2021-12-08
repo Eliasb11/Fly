@@ -14,7 +14,7 @@ public class ItemAgrandir extends Item {
 	@Override
 	public void appliquer(Game game) {
 		Bird bird = game.getBird();
-		bird.setProxyImage(new ProxyImage("/assets/DracaufeuGrand.gif"));
+		bird.setProxyImage(new ProxyImage("/assets/ArtikodinGrand.gif"));
 		bird.setImage(game.getBird().getProxyImage().loadImage().getImage());
 		bird.setWidth(bird.getImage().getWidth(null));
 		bird.setHeight(bird.getImage().getHeight(null));

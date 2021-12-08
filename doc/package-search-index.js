@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.flappybird.controller"},{"l":"com.flappybird.model"},{"l":"com.flappybird.model.proxy"},{"l":"com.flappybird.view"}];updateSearchResults();
